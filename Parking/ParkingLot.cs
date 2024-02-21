@@ -37,20 +37,21 @@ namespace Parking
         {
             foreach (var parked in parkedVehicle)
             {
-                Console.WriteLine(parked.Key.vehicletype + " Slot " + parked.Value + " is Occupied by " + parked.Key.vehicleNumber);
+                Console.WriteLine(parked.Key.VehicleType + " Slot " + parked.Value + " is Occupied by " + parked.Key.VehicleNumber);
             }
         }
 
         public int GetSlotsForVehicle(VehicleType vehicleType)
         {
-            //int slots = 0;
-            //foreach(var vehicle in parkedVehicle)
-            //{
-            //    vehicle.Key.vehicletype = vehicleType;
-            //    slots++;
-            //}
-            //return slots;
-            return parkedVehicle.Count(v => v.Key.vehicletype == vehicleType);
+            int slots = 0;
+            foreach (var parked in parkedVehicle)
+            {
+                if(parked.Key.VehicleType == vehicleType)
+                {
+                    slots++;
+                }
+            }
+            return slots;
         }
 
     }

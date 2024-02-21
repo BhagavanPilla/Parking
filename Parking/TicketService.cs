@@ -17,9 +17,9 @@ namespace Parking
         {
            foreach (Ticket ticket in tickets)
             {
-                if(ticket.vehicleNumber == vehicleNumber)
+                if(ticket.VehicleNumber == vehicleNumber)
                 {
-                    ticket.outTime= DateTime.Now;
+                    ticket.OutTime= DateTime.Now;
                     ticket.DisplayTicket();
 
                 }

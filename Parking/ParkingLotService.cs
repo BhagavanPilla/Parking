@@ -25,15 +25,15 @@ namespace Parking
         public bool IsSlotsAvailable(VehicleType vehicleType)
         {
             int slots = parkingLot.GetSlotsForVehicle(vehicleType);
-            if(vehicleType==VehicleType.twoWheeler)
+            if(vehicleType == VehicleType.twoWheeler)
             {
                 return slots < parkingLot.numberOfTwoWheelerSlots;
             }
-            else if(vehicleType==VehicleType.fourWheeler)
+            else if(vehicleType == VehicleType.fourWheeler)
             {
                 return slots < parkingLot.numberOfFourWheelerSlots;
             }
-            else if(vehicleType==VehicleType.heavyVehicle)
+            else if(vehicleType == VehicleType.heavyVehicle)
             {
                 return slots < parkingLot.numberOfHeavyVehicleSlots;
             }
@@ -49,7 +49,7 @@ namespace Parking
             int slotNumber = 1;
             foreach(var K in parkingLot.parkedVehicle)
             {
-                if(K.Value==slotNumber && K.Key.vehicletype==vehicleType)
+                if(K.Value == slotNumber && K.Key.VehicleType == vehicleType)
                 {
                     slotNumber++;
                 }
@@ -108,7 +108,7 @@ namespace Parking
             Vehicle parkedVehicle = null;
             foreach(var vehicle in parkingLot.parkedVehicle.Keys)
             {
-                if(vehicle.vehicleNumber == vehicleNumber)
+                if(vehicle.VehicleNumber == vehicleNumber)
                 {
                     parkedVehicle = vehicle;
                     break;
