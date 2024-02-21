@@ -8,6 +8,15 @@ namespace Parking
 {
     public class Vehicle
     {
+        public string vehicleNumber {  get; set; }
+        public VehicleType vehicletype { get; set; }
 
+
+
+        public Vehicle(string vehicle, VehicleType type)
+        {
+            this.vehicleNumber = vehicle;
+            this.vehicletype = type;
+        }
     }
 }

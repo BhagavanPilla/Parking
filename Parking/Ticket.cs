@@ -6,17 +6,28 @@ using System.Threading.Tasks;
 
 namespace Parking
 {
-    public class Ticket:Parking
+    public class Ticket
     {
-        public Ticket(int twoWheelers, int fourWheelers, int heavyVehicles):base(twoWheelers,fourWheelers,heavyVehicles)
+        public string vehicleNumber {  get; set; }
+        public VehicleType vehicleType { get; set; }
+        public int slotNumber {  get; set; }
+        public DateTime inTime { get; set; }
+        public DateTime outTime {  get; set; }
+        public Ticket(string vehicleNumber,VehicleType vehicleType,int slotNumber,DateTime inTime,DateTime outTime)
         {
+            this.vehicleNumber = vehicleNumber;
+            this.vehicleType = vehicleType;
+            this.slotNumber = slotNumber;
+            this.inTime = inTime;
+            this.outTime = outTime;
 
         }
-        public static void DisplayOccupancy()
+        public void DisplayTicket()
         {
-            Console.WriteLine("\n2 WheelerSlots:" + (numberOfTwoWheelerSlots - (CountOccupiedSlots(0, numberOfTwoWheelerSlots))));
-            Console.WriteLine("4 WheelerSlots:" + (numberOfFourWheelerSlots - (CountOccupiedSlots(numberOfTwoWheelerSlots, numberOfTwoWheelerSlots + numberOfFourWheelerSlots))));
-            Console.WriteLine("heavy vehicleSlots:"+(numberOfHeavyVehicleSlots-(CountOccupiedSlots(numberOfTwoWheelerSlots + numberOfFourWheelerSlots, occupiedSlots.Count))));
+            Console.WriteLine("VehicleNumber: " + vehicleNumber);
+            Console.WriteLine("Slot: " + slotNumber);
+            Console.WriteLine("InTime: " + inTime);
+            Console.WriteLine("OutTime: " + outTime);
         }
     }
 }

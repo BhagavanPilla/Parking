@@ -8,19 +8,62 @@ namespace Parking
 {
     public class Simulator
     {
+        public static int Input()
+        {
+            int n;
+            try
+            {
+                n = Convert.ToInt32(Console.ReadLine());
+                if(n<0)
+                {
+                    throw new Exception();
+                }
+            }
+            catch(FormatException)
+            {
+                Console.WriteLine("Enter Integer Value");
+                n=Input();
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("Enter Small value");
+                n=Input();
+            }
+            catch(Exception)
+            {
+                Console.WriteLine("Enter Positive Value");
+                n=Input();
+            }
+            return n;
+        }
         static void Main()
         {
-            ParkingLot parkingLot = new ParkingLot(3,3,3);
+
+            ParkingLotService parkingLotService = new ParkingLotService(3,3,3);
             while (true)
             {
 
-                Ticket.DisplayOccupancy();
+                parkingLotService.DisplayAvailableSlots();
 
-                Console.Write("\nEnter Vehicle Number: ");
-                string number = Console.ReadLine();
-                Console.Write("\nEnter Vehicle Type: ");
-                int type = Convert.ToInt32(Console.ReadLine());
-                Parking.ParkVehicle(number, type);
+                Console.WriteLine("\n1.Park Vehicle");
+                Console.WriteLine("2.Unpark Vehicle");
+                Console.WriteLine("3.Exit");
+                int option=Input();
+
+                switch(option)
+                {
+                    case 1:
+                        parkingLotService.ParkVehicle();
+                        break;
+                    case 2:
+                        parkingLotService.UnParkVehicle();
+                        break;
+                    case 3:
+                        return;
+                    default:
+                        Console.WriteLine("Enter Valid Option");
+                        break;
+                }
             }
         }
     }

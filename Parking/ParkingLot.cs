@@ -8,10 +8,9 @@ namespace Parking
 {
     public class ParkingLot
     {
-        public static int numberOfTwoWheelerSlots;
-        public static int numberOfFourWheelerSlots;
-        public static int numberOfHeavyVehicleSlots;
-        public static List<bool> occupiedSlots;
+         public int numberOfTwoWheelerSlots;
+         public int numberOfFourWheelerSlots;
+         public int numberOfHeavyVehicleSlots;
         
 
         public ParkingLot(int twowheelers,int fourWheelers,int heavyVehicle)
@@ -20,35 +19,39 @@ namespace Parking
             numberOfFourWheelerSlots = fourWheelers;
             numberOfHeavyVehicleSlots = heavyVehicle;
 
-            int totalSlots=numberOfTwoWheelerSlots+numberOfFourWheelerSlots+numberOfHeavyVehicleSlots;
-            occupiedSlots = new List<bool>(new bool[totalSlots]);
+            
         }
 
-        public static int FindAvailableSlots(int start,int end)
+        public Dictionary<Vehicle,int> parkedVehicle=new Dictionary<Vehicle,int>();
+        public List<Ticket> tickets=new List<Ticket>();
+
+        public void AvailableSlots()
         {
-            for(int i= start; i < end; i++)
-            {
-                if (!occupiedSlots[i])
-                {
-                    return i;
-                }
-            }
-            return -1;
+            Console.WriteLine("\nParking Lot Available slots are");
+            Console.WriteLine(VehicleType.twoWheeler + " : " + (numberOfTwoWheelerSlots - GetSlotsForVehicle(VehicleType.twoWheeler)));
+            Console.WriteLine(VehicleType.fourWheeler + " : " + (numberOfFourWheelerSlots - GetSlotsForVehicle(VehicleType.fourWheeler)));
+            Console.WriteLine(VehicleType.heavyVehicle + " : " + (numberOfHeavyVehicleSlots - GetSlotsForVehicle(VehicleType.heavyVehicle)));
         }
 
-        public static int GetSlotsForVehicle(int vehicleType)
+        public void OccupiedSlots()
         {
-            switch (vehicleType)
+            foreach (var parked in parkedVehicle)
             {
-                case 2:
-                    return numberOfTwoWheelerSlots;
-                case 4:
-                    return numberOfFourWheelerSlots;
-                case 6:
-                    return numberOfTwoWheelerSlots;
-                default:
-                    return 0;
+                Console.WriteLine(parked.Key.vehicletype + " Slot " + parked.Value + " is Occupied by " + parked.Key.vehicleNumber);
             }
         }
+
+        public int GetSlotsForVehicle(VehicleType vehicleType)
+        {
+            //int slots = 0;
+            //foreach(var vehicle in parkedVehicle)
+            //{
+            //    vehicle.Key.vehicletype = vehicleType;
+            //    slots++;
+            //}
+            //return slots;
+            return parkedVehicle.Count(v => v.Key.vehicletype == vehicleType);
+        }
+
     }
 }
