@@ -11,18 +11,18 @@ namespace Parking
          public int numberOfTwoWheelerSlots;
          public int numberOfFourWheelerSlots;
          public int numberOfHeavyVehicleSlots;
-        
+         public List<ParkingSlot> slot;
 
-        public ParkingLot(int twowheelers,int fourWheelers,int heavyVehicle)
+        public ParkingLot(int twowheelers,int fourWheelers,int heavyVehicle,List<ParkingSlot> slots)
         {
             numberOfTwoWheelerSlots = twowheelers;
             numberOfFourWheelerSlots = fourWheelers;
             numberOfHeavyVehicleSlots = heavyVehicle;
-
+            slot = slots;
             
         }
 
-        public Dictionary<Vehicle,int> parkedVehicle=new Dictionary<Vehicle,int>();
+      //  public Dictionary<Vehicle,int> parkedVehicle=new Dictionary<Vehicle,int>();
         public List<Ticket> tickets=new List<Ticket>();
 
         public void AvailableSlots()
@@ -35,18 +35,22 @@ namespace Parking
 
         public void OccupiedSlots()
         {
-            foreach (var parked in parkedVehicle)
+            foreach (var parked in slot)
             {
-                Console.WriteLine(parked.Key.VehicleType + " Slot " + parked.Value + " is Occupied by " + parked.Key.VehicleNumber);
+                if (parked.IsOccupied == true)
+                {
+                    Console.WriteLine(parked.VehicleType + " Slot " + parked.SlotNumber + " is Occupied by " + parked.VehicleNumber);
+                }
+                
             }
         }
 
         public int GetSlotsForVehicle(VehicleType vehicleType)
         {
             int slots = 0;
-            foreach (var parked in parkedVehicle)
+            foreach (var K in slot)
             {
-                if(parked.Key.VehicleType == vehicleType)
+                if(K.VehicleType == vehicleType && K.IsOccupied==true)
                 {
                     slots++;
                 }

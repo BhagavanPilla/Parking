@@ -38,8 +38,28 @@ namespace Parking
         }
         static void Main()
         {
+            Console.WriteLine("Enter no of two wheeler : ");
+            int n1 = Input();
+            Console.WriteLine("Enter no of three wheeler : ");
+            int n2 = Input();
+            Console.WriteLine("Enter no of heavy wheeler : ");
+            int n3 = Input();
 
-            ParkingLotService parkingLotService = new ParkingLotService(3,3,3);
+            List<ParkingSlot> slots = new List<ParkingSlot>();
+            for(int i=0; i < n1; i++)
+            {
+                slots.Add(new ParkingSlot(i + 1,VehicleType.twoWheeler));
+            }
+            for (int i = 0; i < n2; i++)
+            {
+                slots.Add(new ParkingSlot(i + 1, VehicleType.fourWheeler));
+            }
+            for (int i = 0; i < n3; i++)
+            {
+                slots.Add(new ParkingSlot(i + 1, VehicleType.heavyVehicle));
+            }
+
+            ParkingLotService parkingLotService = new ParkingLotService(n1,n2,n3,slots);
             while (true)
             {
 

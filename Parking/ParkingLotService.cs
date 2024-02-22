@@ -9,11 +9,12 @@ namespace Parking
     public class ParkingLotService
     {
         public ParkingLot parkingLot;
-
+        public List<ParkingSlot> slot;
         TicketService ticketService=new TicketService();
-        public ParkingLotService(int twoWheelers,int fourWheelers,int heavyVehicles)
+        public ParkingLotService(int twoWheelers,int fourWheelers,int heavyVehicles,List<ParkingSlot> slots)
         {
-            parkingLot=new ParkingLot(twoWheelers, fourWheelers, heavyVehicles);
+            parkingLot=new ParkingLot(twoWheelers, fourWheelers, heavyVehicles,slots);
+            slot = slots;
         }
 
         public void DisplayAvailableSlots()
@@ -47,9 +48,9 @@ namespace Parking
         public int GetNextAvailableSlot(VehicleType vehicleType)
         {
             int slotNumber = 1;
-            foreach(var K in parkingLot.parkedVehicle)
+            foreach(var K in slot)
             {
-                if(K.Value == slotNumber && K.Key.VehicleType == vehicleType)
+                if(K.SlotNumber == slotNumber && K.VehicleType.Equals(vehicleType) && K.IsOccupied==true)
                 {
                     slotNumber++;
                 }
@@ -88,7 +89,15 @@ namespace Parking
                 int slotNumber = GetNextAvailableSlot(vehicleType);
                 Ticket ticket = ticketService.GenerateTicket(vehicleNumber, vehicleType, slotNumber);
                 parkingLot.tickets.Add(ticket);
-                parkingLot.parkedVehicle.Add(new Vehicle(vehicleNumber, vehicleType), slotNumber);
+                //parkingLot.parkedVehicle.Add(new Vehicle(vehicleNumber, vehicleType), slotNumber);
+                foreach(var K in slot)
+                {
+                    if(K.SlotNumber == slotNumber && K.VehicleType==vehicleType)
+                    {
+                        K.VehicleNumber = vehicleNumber;
+                        K.IsOccupied = true;
+                    }
+                }
                 Console.WriteLine("\nVehicle " + vehicleNumber + " parked successfully\n");
                 ticket.DisplayTicket();
                 return true;
@@ -104,20 +113,20 @@ namespace Parking
         public void UnParkVehicle()
         {
             Console.Write("\nEnter Vehicle Number to Unpark: ");
-            string vehicleNumber=Console.ReadLine();
-            Vehicle parkedVehicle = null;
-            foreach(var vehicle in parkingLot.parkedVehicle.Keys)
+            string vehicleNumber = Console.ReadLine();
+            ParkingSlot parkingSlot = null;
+            foreach (var K in slot)
             {
-                if(vehicle.VehicleNumber == vehicleNumber)
+                if (K.VehicleNumber == vehicleNumber && K.IsOccupied==true)
                 {
-                    parkedVehicle = vehicle;
+                    parkingSlot = K;
                     break;
                 }
             }
-            if (parkedVehicle != null)
+            if (parkingSlot != null)
             {
-                parkingLot.parkedVehicle.Remove(parkedVehicle);
-                Console.WriteLine("\nVehicle "+ vehicleNumber+" Unparked Successfully\n");
+                parkingSlot.IsOccupied=false;
+                Console.WriteLine("\nVehicle " + vehicleNumber + " Unparked Successfully\n");
                 ticketService.UpdateOutTime(parkingLot.tickets, vehicleNumber);
             }
             else
@@ -126,8 +135,8 @@ namespace Parking
             }
 
         }
-            
-           
-        
+
+
+
     }
 }
