@@ -38,11 +38,11 @@ namespace Parking
         }
         static void Main()
         {
-            Console.WriteLine("Enter no of two wheeler : ");
+            Console.Write("Enter no of two wheeler slots : ");
             int n1 = Input();
-            Console.WriteLine("Enter no of three wheeler : ");
+            Console.Write("Enter no of four wheeler slots : ");
             int n2 = Input();
-            Console.WriteLine("Enter no of heavy wheeler : ");
+            Console.Write("Enter no of heavy Vehicle slots : ");
             int n3 = Input();
 
             List<ParkingSlot> slots = new List<ParkingSlot>();

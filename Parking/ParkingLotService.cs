@@ -58,7 +58,7 @@ namespace Parking
             return slotNumber;
         }
 
-        public bool ParkVehicle()
+        public void ParkVehicle()
         {
             Console.Write("\nEnter Vehicle Number to Park: ");
             string vehicleNumber = Console.ReadLine();
@@ -89,7 +89,6 @@ namespace Parking
                 int slotNumber = GetNextAvailableSlot(vehicleType);
                 Ticket ticket = ticketService.GenerateTicket(vehicleNumber, vehicleType, slotNumber);
                 parkingLot.tickets.Add(ticket);
-                //parkingLot.parkedVehicle.Add(new Vehicle(vehicleNumber, vehicleType), slotNumber);
                 foreach(var K in slot)
                 {
                     if(K.SlotNumber == slotNumber && K.VehicleType==vehicleType)
@@ -100,12 +99,10 @@ namespace Parking
                 }
                 Console.WriteLine("\nVehicle " + vehicleNumber + " parked successfully\n");
                 ticket.DisplayTicket();
-                return true;
             }
             else
             {
                 Console.WriteLine("\n No Available Slots for " + vehicleType);
-                return false;
             }
             
         }
@@ -135,8 +132,6 @@ namespace Parking
             }
 
         }
-
-
 
     }
 }

@@ -22,7 +22,6 @@ namespace Parking
             
         }
 
-      //  public Dictionary<Vehicle,int> parkedVehicle=new Dictionary<Vehicle,int>();
         public List<Ticket> tickets=new List<Ticket>();
 
         public void AvailableSlots()

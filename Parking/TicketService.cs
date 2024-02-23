@@ -19,7 +19,7 @@ namespace Parking
             {
                 if(ticket.VehicleNumber == vehicleNumber)
                 {
-                    ticket.OutTime= DateTime.Now;
+                    ticket.OutTime = DateTime.Now;
                     ticket.DisplayTicket();
 
                 }
